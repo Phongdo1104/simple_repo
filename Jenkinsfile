@@ -111,22 +111,22 @@ pipeline {
                 }
             }
         }
-        stage('Preparation') {
-            when {
-                expression {
-                    return env.PR_ID != null
-                }
-            }
-            steps {
-                script {
-                    def jobBaseName = env.JOB_BASE_NAME;
+        // stage('Preparation') {
+        //     when {
+        //         expression {
+        //             return env.PR_ID != null
+        //         }
+        //     }
+        //     steps {
+        //         script {
+        //             def jobBaseName = env.JOB_BASE_NAME;
 
-                    sh """
-                        git config --global --add safe.directory /var/lib/jenkins/workspace/${jobBaseName}
-                    """
-                }
-            }
-        }
+        //             sh """
+        //                 git config --global --add safe.directory /var/lib/jenkins/workspace/${jobBaseName}
+        //             """
+        //         }
+        //     }
+        // }
         stage('Code Review') {
             when {
                 expression {

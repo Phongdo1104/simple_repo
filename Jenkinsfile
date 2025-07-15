@@ -15,7 +15,6 @@ def removeCredentialFiles=false
 def USER_SSH=''
 def SKIP_ANALYZE=false
 def timestamp = ''
-// def prURL=''
 
 pipeline {
     agent any
@@ -27,30 +26,12 @@ pipeline {
         GIT_URL = 'github.com'
         GIT_CREDENTIALS_PATH_FOLDER = '/tmp/jenkin_credentials'
         SSH_AGENT_ACCOUNT = 'ssh-remote-ubuntu'
-        // SONAR_SCANNER_HOME = tool 'SonarScannerStage'
         SONAR_TOKEN_ID = 'sonar-token-id'
         SONAR_SERVER_ID = "SonarQubeServer"
         BITO_AI_PATH = '/home/bito-ai/CodeReviewAgent/cra-scripts'
         GITHUB_TOKEN = credentials('github-token')
         QODO_API_KEY = credentials('qodo-api-token')
     }
-
-    // parameters {
-        // Choice parameter for the user to select an action
-        // choice(name: 'ACTION', choices: ['Update only Selected Server', 'Bulk update to all servers'],
-        //        description: "Select the action to perform.\n*Please select servers bellow if using [Update only Selected Server]")
-
-        // Checkbox-like parameter to apply for [STG] iijm-st-suggest-api1
-        // if you want to apply for other servers, you can add more boolean parameters & edit in booleanParams
-        // booleanParam(name: "ubuntu_cli_server", defaultValue: false,description: "[LOCAL] Ubuntu CLI 24.04.2")
-
-        // Choice parameter for the user to select a branch build option
-        // choice(name: 'SOURCE_CODE', choices: ['No update source code', 'Update source using BUILD_BRANCH'],description: "please input the BUILD_BRANCH")
-        // Text parameter for dynamic environment variables (for update/add)
-        // text(name: 'BUILD_BRANCH', defaultValue: 'main',description: "Define branch to checkout\nRunning only select `SOURCE_CODE` as option [Update source using BUILD_BRANCH]")
-        // booleanParam(name: "skip_sonar_analyze", defaultValue: false, description: "Skip scanning & analysis via SonarQube")
-        // text(name: 'PR_PATH', defaultValue: '', description: 'Pull Request Path')
-    // }
 
     triggers {
         GenericTrigger(
@@ -65,8 +46,6 @@ pipeline {
             // for debugging:
             printPostContent:       true,
             printContributedVariables: true,
-            // regexpFilterExpression: 'opened',
-            // regexpFilterText:        '$ACTION',
             regexpFilterExpression: 'opened:main',
             regexpFilterText:        '$ACTION:$TARGET_BRANCH',
 
@@ -111,22 +90,7 @@ pipeline {
                 }
             }
         }
-        // stage('Preparation') {
-        //     when {
-        //         expression {
-        //             return env.PR_ID != null
-        //         }
-        //     }
-        //     steps {
-        //         script {
-        //             def jobBaseName = env.JOB_BASE_NAME;
 
-        //             sh """
-        //                 git config --global --add safe.directory /var/lib/jenkins/workspace/${jobBaseName}
-        //             """
-        //         }
-        //     }
-        // }
         stage('Code Review') {
             when {
                 expression {

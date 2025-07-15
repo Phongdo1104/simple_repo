@@ -23,7 +23,7 @@ pipeline {
     environment {
         // Define the env file location as a global variable
         projectPath = '/home/new_laravel_test/test-laravel/laravel'
-        GIT_CREDENTIALS_ID = 'jenkins-test-github'
+        GIT_CREDENTIALS_ID = 'jenkins-git-simple-rep'
         GIT_URL = 'github.com'
         GIT_CREDENTIALS_PATH_FOLDER = '/tmp/jenkin_credentials'
         SSH_AGENT_ACCOUNT = 'ssh-remote-ubuntu'
@@ -35,7 +35,7 @@ pipeline {
         QODO_API_KEY = credentials('qodo-api-token')
     }
 
-    parameters {
+    // parameters {
         // Choice parameter for the user to select an action
         // choice(name: 'ACTION', choices: ['Update only Selected Server', 'Bulk update to all servers'],
         //        description: "Select the action to perform.\n*Please select servers bellow if using [Update only Selected Server]")
@@ -50,7 +50,7 @@ pipeline {
         // text(name: 'BUILD_BRANCH', defaultValue: 'main',description: "Define branch to checkout\nRunning only select `SOURCE_CODE` as option [Update source using BUILD_BRANCH]")
         // booleanParam(name: "skip_sonar_analyze", defaultValue: false, description: "Skip scanning & analysis via SonarQube")
         // text(name: 'PR_PATH', defaultValue: '', description: 'Pull Request Path')
-    }
+    // }
 
     triggers {
         GenericTrigger(
